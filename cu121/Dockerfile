@@ -16,60 +16,60 @@ RUN set -eu
 RUN --mount=type=cache,target=/var/cache/zypp \
     zypper modifyrepo --disable --all \
     && zypper addrepo --check --refresh --gpgcheck \
-        'https://mirrors.tuna.tsinghua.edu.cn/opensuse/tumbleweed/repo/oss/' mirror-oss \
+    'https://mirrors.tuna.tsinghua.edu.cn/opensuse/tumbleweed/repo/oss/' mirror-oss \
     && zypper addrepo --check --refresh --gpgcheck \
-        'https://mirrors.tuna.tsinghua.edu.cn/opensuse/tumbleweed/repo/non-oss/' mirror-non-oss \
+    'https://mirrors.tuna.tsinghua.edu.cn/opensuse/tumbleweed/repo/non-oss/' mirror-non-oss \
     && zypper addrepo --check --refresh --priority 90 \
-        'https://mirrors.tuna.tsinghua.edu.cn/packman/suse/openSUSE_Tumbleweed/Essentials/' mirror-packman-essentials \
+    'https://mirrors.tuna.tsinghua.edu.cn/packman/suse/openSUSE_Tumbleweed/Essentials/' mirror-packman-essentials \
     && zypper --gpg-auto-import-keys \
-        install --no-confirm --auto-agree-with-licenses \
-python312-devel \
-python312-pip \
-python312-wheel \
-python312-setuptools \
-python312-Cython \
-python312-py-build-cmake \
-python312-aiohttp \
-python312-dbm \
-python312-ffmpeg-python \
-python312-GitPython \
-python312-httpx \
-python312-joblib \
-python312-lark \
-python312-matplotlib \
-python312-mpmath \
-python312-numba-devel \
-python312-numpy \
-python312-onnx \
-python312-opencv \
-python312-pandas \
-python312-qrcode \
-python312-rich \
-python312-scikit-build \
-python312-scikit-build-core-pyproject \
-python312-scikit-image \
-python312-scikit-learn \
-python312-scipy \
-python312-svglib \
-python312-tqdm \
-Mesa-libGL1 \
-Mesa-libEGL-devel \
-libgthread-2_0-0 \
-make \
-ninja \
-git \
-aria2 \
-fish \
-fd \
-vim \
-opencv \
-opencv-devel \
-ffmpeg \
-x264 \
-x265 \
-google-noto-sans-fonts \
-google-noto-sans-cjk-fonts \
-google-noto-coloremoji-fonts \
+    install --no-confirm --auto-agree-with-licenses \
+    python312-devel \
+    python312-pip \
+    python312-wheel \
+    python312-setuptools \
+    python312-Cython \
+    python312-py-build-cmake \
+    python312-aiohttp \
+    python312-dbm \
+    python312-ffmpeg-python \
+    python312-GitPython \
+    python312-httpx \
+    python312-joblib \
+    python312-lark \
+    python312-matplotlib \
+    python312-mpmath \
+    python312-numba-devel \
+    python312-numpy \
+    python312-onnx \
+    python312-opencv \
+    python312-pandas \
+    python312-qrcode \
+    python312-rich \
+    python312-scikit-build \
+    python312-scikit-build-core-pyproject \
+    python312-scikit-image \
+    python312-scikit-learn \
+    python312-scipy \
+    python312-svglib \
+    python312-tqdm \
+    Mesa-libGL1 \
+    Mesa-libEGL-devel \
+    libgthread-2_0-0 \
+    make \
+    ninja \
+    git \
+    aria2 \
+    fish \
+    fd \
+    vim \
+    opencv \
+    opencv-devel \
+    ffmpeg \
+    x264 \
+    x265 \
+    google-noto-sans-fonts \
+    google-noto-sans-cjk-fonts \
+    google-noto-coloremoji-fonts \
     && rm /usr/lib64/python3.12/EXTERNALLY-MANAGED \
     && update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.12 100
 
@@ -79,10 +79,10 @@ google-noto-coloremoji-fonts \
 
 RUN --mount=type=cache,target=/var/cache/zypp \
     zypper --gpg-auto-import-keys \
-        install --no-confirm --auto-agree-with-licenses \
-gcc13 \
-gcc13-c++ \
-cpp13 \
+    install --no-confirm --auto-agree-with-licenses \
+    gcc13 \
+    gcc13-c++ \
+    cpp13 \
     && update-alternatives --install /usr/bin/c++ c++ /usr/bin/g++-13 90 \
     && update-alternatives --install /usr/bin/cc  cc  /usr/bin/gcc-13 90 \
     && update-alternatives --install /usr/bin/cpp cpp /usr/bin/cpp-13 90 \
@@ -104,27 +104,27 @@ ENV PIP_INDEX_URL="https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple"
 RUN --mount=type=cache,target=/root/.cache/pip \
     pip list \
     && pip install \
-        --upgrade pip wheel setuptools \
+    --upgrade pip wheel setuptools \
     && pip install \
-        xformers torchvision torchaudio \
-        --index-url https://download.pytorch.org/whl/cu121 \
-        --extra-index-url https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple
+    xformers torchvision torchaudio \
+    --index-url https://download.pytorch.org/whl/cu121 \
+    --extra-index-url https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple
 
 # Bind environment variables (dependency library .so files)
 ENV LD_LIBRARY_PATH="${LD_LIBRARY_PATH}\
-:/usr/local/lib64/python3.12/site-packages/torch/lib\
-:/usr/local/lib/python3.12/site-packages/nvidia/cuda_cupti/lib\
-:/usr/local/lib/python3.12/site-packages/nvidia/cuda_runtime/lib\
-:/usr/local/lib/python3.12/site-packages/nvidia/cudnn/lib\
-:/usr/local/lib/python3.12/site-packages/nvidia/cufft/lib\
-:/usr/local/lib/python3.12/site-packages/nvidia/cublas/lib\
-:/usr/local/lib/python3.12/site-packages/nvidia/cuda_nvrtc/lib\
-:/usr/local/lib/python3.12/site-packages/nvidia/curand/lib\
-:/usr/local/lib/python3.12/site-packages/nvidia/cusolver/lib\
-:/usr/local/lib/python3.12/site-packages/nvidia/cusparse/lib\
-:/usr/local/lib/python3.12/site-packages/nvidia/nccl/lib\
-:/usr/local/lib/python3.12/site-packages/nvidia/nvjitlink/lib\
-:/usr/local/lib/python3.12/site-packages/nvidia/nvtx/lib"
+    :/usr/local/lib64/python3.12/site-packages/torch/lib\
+    :/usr/local/lib/python3.12/site-packages/nvidia/cuda_cupti/lib\
+    :/usr/local/lib/python3.12/site-packages/nvidia/cuda_runtime/lib\
+    :/usr/local/lib/python3.12/site-packages/nvidia/cudnn/lib\
+    :/usr/local/lib/python3.12/site-packages/nvidia/cufft/lib\
+    :/usr/local/lib/python3.12/site-packages/nvidia/cublas/lib\
+    :/usr/local/lib/python3.12/site-packages/nvidia/cuda_nvrtc/lib\
+    :/usr/local/lib/python3.12/site-packages/nvidia/curand/lib\
+    :/usr/local/lib/python3.12/site-packages/nvidia/cusolver/lib\
+    :/usr/local/lib/python3.12/site-packages/nvidia/cusparse/lib\
+    :/usr/local/lib/python3.12/site-packages/nvidia/nccl/lib\
+    :/usr/local/lib/python3.12/site-packages/nvidia/nvjitlink/lib\
+    :/usr/local/lib/python3.12/site-packages/nvidia/nvtx/lib"
 
 COPY builder-scripts/.  /builder-scripts/
 
@@ -133,19 +133,19 @@ COPY builder-scripts/.  /builder-scripts/
 # 3. Handle MediaPipe's dependency error (requires protobuf<4)
 RUN --mount=type=cache,target=/root/.cache/pip \
     pip install \
-        -r /builder-scripts/pak3.txt \
+    -r /builder-scripts/pak3.txt \
     && pip install \
-        -r /builder-scripts/pak5.txt \
+    -r /builder-scripts/pak5.txt \
     && pip install \
-        -r /builder-scripts/pak7.txt \
+    -r /builder-scripts/pak7.txt \
     && pip uninstall --break-system-packages --yes \
-        onnxruntime-gpu \
+    onnxruntime-gpu \
     && pip --no-cache-dir install --break-system-packages \
-        onnxruntime-gpu \
-        --index-url https://aiinfra.pkgs.visualstudio.com/PublicPackages/_packaging/onnxruntime-cuda-12/pypi/simple/ \
-        --extra-index-url https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple \
+    onnxruntime-gpu \
+    --index-url https://aiinfra.pkgs.visualstudio.com/PublicPackages/_packaging/onnxruntime-cuda-12/pypi/simple/ \
+    --extra-index-url https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple \
     && pip install \
-        mediapipe \
+    mediapipe \
     && pip list
 
 ################################################################################
